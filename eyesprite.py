@@ -27,8 +27,9 @@ spritetex = pi3d.Texture("spriteSheet_2X4.jpg")
 mysprite = pi3d.LodSprite(w=800.0, h=480.0, n=6)
 mysprite.set_draw_details(flatsh,[spritetex],umult=.5,vmult=.25)
 
-offset = 0.0 # uv v offset
-do = -0.25 # uv v increment
+rows=4
+columns = 2
+frame=0
 
 # Fetch key presses.
 mykeys = pi3d.Keyboard()
@@ -66,14 +67,43 @@ for touch in ts.touches:
    touch.on_release = touch_handler
    touch.on_move = touch_handler
 
-ts.run()
+ts.run()  
+
+idleSequence = []
+
+for i in range(2):
+  x=0
+  y=i*0.25
+  idleSequence.append([x,y])
+
+activeSequence = []
+
+#this is not quite right, y goes past 1.0 and really should reset to 0.0 instead
+for i in range(7):
+  x=0
+  if i > 3:
+    x=.5
+  y=i*0.25
+
+  if i > 2 :
+    activeSequence.append([x,y])
+
+#activeSequence = [(0,.75),(0.5,0.0),(0.5,0.25),(0.5,0.5)]
+print(activeSequence)
 
 # Display scene and rotate shape
 while DISPLAY.loop_running():
-
+  frame += 1
   mysprite.draw()
-  offset = (offset + do) % 1.0 # move texture offset in v direction
-  mysprite.set_offset((0.0, offset))
+
+  if isIdle == True :
+    if frame >= len(idleSequence):
+      frame=0
+    mysprite.set_offset(idleSequence[frame])
+  else:
+    if frame >= len(activeSequence):
+      frame=0
+    mysprite.set_offset(activeSequence[frame])
 
   k = mykeys.read()
   if k==112:
