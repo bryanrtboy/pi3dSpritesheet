@@ -21,9 +21,9 @@ CAMERA = pi3d.Camera(is_3d=False)
 
 #create shaders and textures
 flatsh = pi3d.Shader("uv_flat")
-spritetex = pi3d.Texture("beck2.jpg")
+spritetex = pi3d.Texture("bryan2.jpg")
 
-rows=3
+rows=4
 columns = 4
 
 frames = []
@@ -39,7 +39,7 @@ for i in range(columns):
 #quit()
 
 #Create shape and offset variables
-mysprite = pi3d.LodSprite(w=800.0, h=480.0, n=6)
+mysprite = pi3d.LodSprite(w=800.0, h=500.0, n=6)
 mysprite.set_draw_details(flatsh,[spritetex],umult=1/columns,vmult=1/rows)
 
 frame=0
@@ -97,9 +97,9 @@ while DISPLAY.loop_running():
 
 #frame 3,4,5 play once with this setup, and then it loops 
   if isIdle == True :
-    play(0,3)
+    play(0,5)
   else:
-    play(7,11)
+    play(12,15)
 
   k = mykeys.read()
   if k==112:
